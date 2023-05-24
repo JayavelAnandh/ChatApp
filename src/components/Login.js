@@ -1,7 +1,108 @@
-import React from "react";
+import { Button, useToast } from "@chakra-ui/react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const Login = () => {
-  return <div>Login</div>;
+  let toast = useToast();
+  let navigate = useNavigate();
+  let [show, setShow] = useState(false);
+  let [email, setEmail] = useState("");
+  let [password, setPassword] = useState("");
+  let [btnLoading, setBtnLoading] = useState(false);
+
+  const handleSubmit = async () => {
+    setBtnLoading(true);
+    try {
+      let res = await fetch("http://localhost:5000/user/login", {
+        method: "POST",
+        headers: {
+          "content-type": "application/json",
+        },
+        body: JSON.stringify({
+          email,
+          password,
+        }),
+      });
+      let response = await res.json();
+
+      if (response.message) {
+        setBtnLoading(false);
+        return toast({
+          title: response.message,
+          status: "warning",
+          duration: 5000,
+          isClosable: true,
+          position: "bottom",
+        });
+      }
+
+      localStorage.setItem("user-details", response.userDetails);
+      localStorage.setItem("x-auth-token", response.authToken);
+      setBtnLoading(false);
+      navigate("/chatpage");
+      toast({
+        title: "Registration Successful",
+        status: "success",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    } catch (error) {
+      console.log(error);
+      setBtnLoading(false);
+      toast({
+        title: error,
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+  };
+  return (
+    <div className="signupTab">
+      <form>
+        <label htmlFor="Loginemail">
+          E-mail Address <span>*</span>
+        </label>
+        <input
+          type="text"
+          id="Loginemail"
+          name="Loginemail"
+          value={email}
+          onChange={(event) => setEmail(event.target.value)}
+          required
+        />
+
+        <label htmlFor="Loginpassword">
+          Password <span>*</span>
+        </label>
+        <div className="passwordBar">
+          <input
+            type={show ? "text" : "password"}
+            id="Loginpassword"
+            name="Loginpassword"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+            required
+          />
+          <button onClick={() => setShow(!show)} type="button">
+            {show ? "hide" : "show"}
+          </button>
+        </div>
+
+        <Button
+          type="submit"
+          onClick={() => handleSubmit()}
+          colorScheme="green"
+          style={{ marginTop: "3%" }}
+          isLoading={btnLoading}
+        >
+          Log In
+        </Button>
+      </form>
+    </div>
+  );
 };
 
 export default Login;

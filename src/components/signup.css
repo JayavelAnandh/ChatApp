@@ -1,0 +1,51 @@
+.signupTab form {
+    display: flex;
+    flex-direction: column;
+}
+
+.signupTab input {
+    line-height: 2rem;
+    padding-left: 2rem;
+    border-bottom: 2px solid green;
+
+}
+
+.signupTab .passwordBar input {
+    width: 90%;
+}
+
+.signupTab .passwordBar button {
+    margin-left: 3%;
+    border: 2px solid green;
+    width: 7%;
+    height: 2rem;
+    border-radius: 15px;
+    color: green;
+    font-weight: 600;
+}
+
+.signupTab .passwordBar button:hover {
+    color: white;
+    background-color: green;
+}
+
+.signupTab label span {
+    color: red;
+}
+
+.signupTab label {
+    font-size: 20px;
+}
+
+.signupbutton {
+    border: 2px solid green;
+    margin-top: 3%;
+    border-radius: 15px;
+    color: green;
+    font-weight: 600;
+}
+
+.signupbutton:hover {
+    color: white;
+    background-color: green;
+}
