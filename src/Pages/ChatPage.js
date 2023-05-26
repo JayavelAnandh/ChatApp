@@ -14,9 +14,9 @@ const ChatPage = () => {
       console.log(error);
     }
   };
-  useEffect(() => {
-    getChats();
-  }, []);
+  // useEffect(() => {
+  //   getChats();
+  // }, []);
 
   return (
     <div>

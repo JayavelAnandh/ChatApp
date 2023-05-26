@@ -1,9 +1,34 @@
-import { Tab, TabList, TabPanel, TabPanels, Tabs } from "@chakra-ui/react";
-import React from "react";
+import {
+  Tab,
+  TabList,
+  TabPanel,
+  TabPanels,
+  Tabs,
+  useToast,
+} from "@chakra-ui/react";
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import Login from "../components/Login";
 import SignUp from "../components/SignUp";
 import "./HomePage.css";
 const HomePage = () => {
+  let navigate = useNavigate();
+  let toast = useToast();
+  useEffect(() => {
+    let user_Details = localStorage.getItem("user-details");
+
+    if (user_Details) {
+      toast({
+        title: "User Already Logged-In , Trying logging out",
+        status: "warning",
+        duration: 5000,
+        isClosable: true,
+        position: "top",
+      });
+      navigate("/chatpage");
+    }
+  }, [navigate]);
+
   return (
     <div className="container-xl homepage">
       <div className="row">

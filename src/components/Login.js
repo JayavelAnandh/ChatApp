@@ -36,12 +36,15 @@ const Login = () => {
         });
       }
 
-      localStorage.setItem("user-details", response.userDetails);
+      localStorage.setItem(
+        "user-details",
+        JSON.stringify(response.userDetails)
+      );
       localStorage.setItem("x-auth-token", response.authToken);
       setBtnLoading(false);
       navigate("/chatpage");
       toast({
-        title: "Registration Successful",
+        title: "Logged-In Successfully",
         status: "success",
         duration: 5000,
         isClosable: true,
@@ -58,6 +61,10 @@ const Login = () => {
         position: "bottom",
       });
     }
+  };
+  const guestUserCredentials = () => {
+    setEmail("guest123@gmail.com");
+    setPassword("guest");
   };
   return (
     <div className="signupTab">
@@ -100,6 +107,15 @@ const Login = () => {
         >
           Log In
         </Button>
+        <button
+          type="button"
+          className="btn btn-outline-success credentialsBtn"
+          onClick={() => {
+            guestUserCredentials();
+          }}
+        >
+          Use Guest User's Credentials
+        </button>
       </form>
     </div>
   );

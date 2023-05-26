@@ -49,3 +49,13 @@
     color: white;
     background-color: green;
 }
+
+.credentialsBtn {
+    color: green;
+    font-weight: 600;
+    margin-top: 2%;
+}
+
+.credentialsBtn:hover {
+    background-color: green;
+}

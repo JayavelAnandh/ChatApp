@@ -43,7 +43,10 @@ const SignUp = () => {
           });
         }
 
-        localStorage.setItem("user-details", response.userDetails);
+        localStorage.setItem(
+          "user-details",
+          JSON.stringify(response.userDetails)
+        );
         localStorage.setItem("x-auth-token", response.authToken);
         setBtnLoading(false);
         navigate("/chatpage");
