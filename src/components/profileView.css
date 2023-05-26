@@ -1,0 +1,17 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap');
+
+.profileName {
+    font-family: 'PT Serif', serif;
+    font-size: 34px;
+    letter-spacing: 1px !important;
+}
+
+.profileEmail {
+    font-family: 'PT Serif', serif;
+    letter-spacing: 1px !important;
+
+}
+
+.profileImage {
+    border: 5px solid whitesmoke;
+}

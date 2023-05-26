@@ -1,28 +1,19 @@
 import React, { useEffect, useState } from "react";
+import { ChatStates } from "../chatContext";
+import ChatArea from "../components/ChatArea";
+import ChatsList from "../components/ChatsList";
+import Sidebar from "../components/Sidebar";
 
 const ChatPage = () => {
-  const [chats, setChats] = useState([]);
-  const getChats = async () => {
-    try {
-      let res = await fetch("http://localhost:5000/chats", {
-        method: "GET",
-      });
-      let response = await res.json();
-      console.log(response);
-      setChats(response);
-    } catch (error) {
-      console.log(error);
-    }
-  };
-  // useEffect(() => {
-  //   getChats();
-  // }, []);
+  let user = ChatStates().userDetails;
 
   return (
-    <div>
-      {chats.map((value, idx) => {
-        return <div key={idx}>{value.chatName}</div>;
-      })}
+    <div style={{ width: "100%" }}>
+      {user && <Sidebar />}
+      <div>
+        {user && <ChatsList />}
+        {user && <ChatArea />}
+      </div>
     </div>
   );
 };
