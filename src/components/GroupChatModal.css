@@ -1,0 +1,14 @@
+@import url('https://fonts.googleapis.com/css2?family=PT+Serif:wght@700&display=swap');
+
+.groupModalhead {
+    font-size: 30px;
+    display: flex;
+    justify-content: center;
+    font-family: 'PT Serif', serif;
+}
+
+.groupModalContent .groupModalBody {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
