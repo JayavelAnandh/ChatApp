@@ -8,11 +8,11 @@ import { useEffect, useState } from "react";
 // import GroupChatModal from "./miscellaneous/GroupChatModal";
 import { Button } from "@chakra-ui/react";
 import { ChatStates } from "../chatContext";
-import { getSender } from "./commonFunctions";
+import { getSender2 } from "./commonFunctions";
 import GroupChatModal from "./GroupChatModal";
 //import { ChatState } from "../Context/ChatProvider";
 
-const MyChats = ({ fetchAgain }) => {
+const MyChats = ({ update }) => {
   const [loggedUser, setLoggedUser] = useState();
 
   const { selectedChat, setSelectedChat, chats, setChats } = ChatStates();
@@ -45,20 +45,15 @@ const MyChats = ({ fetchAgain }) => {
     }
   };
 
-  useEffect(
-    () => {
-      setLoggedUser(JSON.parse(localStorage.getItem("user-details")));
-      fetchChats();
-      // eslint-disable-next-line
-    },
-    [
-      /*fetchAgain*/
-    ]
-  );
+  useEffect(() => {
+    setLoggedUser(JSON.parse(localStorage.getItem("user-details")));
+    fetchChats();
+    // eslint-disable-next-line
+  }, [update]);
 
   return (
     <Box
-      d={{ base: selectedChat ? "none" : "flex", md: "flex" }}
+      display={{ base: selectedChat ? "none" : "flex", md: "flex" }}
       flexDirection="column"
       alignItems="center"
       p={3}
@@ -112,20 +107,11 @@ const MyChats = ({ fetchAgain }) => {
                 key={idx}
               >
                 {chat.users && (
-                  <div>
-                    {!chat.isGroupChat &&
-                    chat.users &&
-                    chat.users.length >= 2 &&
-                    loggedUser._id
-                      ? getSender(
-                          loggedUser._id,
-                          chat.users[0]._id,
-                          chat.users[1]._id,
-                          chat.users[0].name,
-                          chat.users[1].name
-                        )
+                  <>
+                    {!chat.isGroupChat
+                      ? getSender2(user, chat.users)
                       : chat.chatName}
-                  </div>
+                  </>
                 )}
 
                 {chat.latestMessage && (

@@ -7,13 +7,13 @@ import Sidebar from "../components/Sidebar";
 import "./chatPage.css";
 const ChatPage = () => {
   let user = ChatStates().userDetails;
-
+  let [update, setUpdate] = useState(false);
   return (
     <div style={{ width: "100%" }}>
       {user && <Sidebar />}
       <div className="mainBlock">
-        {user && <ChatsList />}
-        {user && <ChatArea />}
+        {user && <ChatsList update={update} />}
+        {user && <ChatArea update={update} setUpdate={setUpdate} />}
       </div>
     </div>
   );
