@@ -41,7 +41,32 @@ const GroupDetailsModal = ({ update, setUpdate }) => {
       });
     }
     try {
-    } catch (error) {}
+      setLoading(true);
+      let res = await fetch("http://localhost:5000/chat/removeMember", {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${token}`,
+        },
+        body: JSON.stringify({
+          chatId: selectedChat._id,
+          userId: userId,
+        }),
+      });
+      let response = await res.json();
+      userId === user._id ? setSelectedChat() : setSelectedChat(response);
+      setUpdate(!update);
+    } catch (error) {
+      toast({
+        title: "Error Occured!",
+        description: error,
+        status: "error",
+        duration: 5000,
+        isClosable: true,
+        position: "bottom",
+      });
+    }
+    setLoading(false);
   };
 
   //http://localhost:5000/chat/addMember
