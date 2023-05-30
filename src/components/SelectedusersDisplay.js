@@ -4,8 +4,16 @@ import React from "react";
 
 const SelectedusersDisplay = ({ user, handleFunction }) => {
   return (
-    <span onClick={() => handleFunction()}>
-      <Avatar src={user.pic} />
+    <span
+      onClick={() => handleFunction()}
+      style={{
+        border: "1px solid green",
+        borderRadius: "10px",
+        margin: "3px",
+        width: "45%",
+      }}
+    >
+      <Avatar src={user.pic} size="lg" />
       <Box ml="3">
         <Text fontWeight="bold">
           {user.name}

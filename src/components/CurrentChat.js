@@ -2,7 +2,9 @@ import { ArrowBackIcon } from "@chakra-ui/icons";
 import { Box, IconButton, Image, Text } from "@chakra-ui/react";
 import React from "react";
 import { ChatStates } from "../chatContext";
-import { getSender, getSender2 } from "./commonFunctions";
+import { getSender, getSender2, getSenderDetails } from "./commonFunctions";
+import GroupDetailsModal from "./GroupDetailsModal";
+import ProfileView from "./ProfileView";
 
 const CurrentChat = ({ update, setUpdate }) => {
   const user = ChatStates().userDetails;
@@ -29,11 +31,33 @@ const CurrentChat = ({ update, setUpdate }) => {
               icon={<ArrowBackIcon />}
             />
             {!selectedChat.isGroupChat ? (
-              <>{getSender2(user, selectedChat.users)}</>
+              <>
+                {getSender2(user, selectedChat.users)}
+                <ProfileView user={getSenderDetails(user, selectedChat.users)}>
+                  <i class="fa-solid fa-id-card"></i>
+                </ProfileView>
+              </>
             ) : (
-              <Text>{selectedChat.chatName.toUpperCase()}</Text>
+              <>
+                <Text>{selectedChat.chatName.toUpperCase()}</Text>
+                <GroupDetailsModal update={update} setUpdate={setUpdate} />
+              </>
             )}
           </Box>
+          <Box
+            className="chatAreaBG"
+            style={{
+              display: "flex",
+              flexDirection: "column",
+              justifyContent: "flex-end",
+              backgroundColor: "gainsboro",
+              padding: "8px",
+              width: "100%",
+              height: "100%",
+              borderRadius: "15px",
+              msOverflowY: "hidden",
+            }}
+          ></Box>
         </>
       ) : (
         <Box style={{ height: "100%", width: "100%" }}>

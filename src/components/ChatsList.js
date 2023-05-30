@@ -40,7 +40,7 @@ const MyChats = ({ update }) => {
         status: "error",
         duration: 5000,
         isClosable: true,
-        position: "bottom-left",
+        position: "top-left",
       });
     }
   };
@@ -77,9 +77,10 @@ const MyChats = ({ update }) => {
           <Button
             d="flex"
             fontSize={{ base: "17px", md: "10px", lg: "17px" }}
-            rightIcon={<AddIcon />}
+            // rightIcon={<AddIcon />}
           >
-            New Group Chat
+            New Group Chat{" "}
+            <i class="fa-solid fa-user-group" style={{ margin: "5px" }}></i>
           </Button>
         </GroupChatModal>
       </Box>

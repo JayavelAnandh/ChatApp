@@ -27,3 +27,8 @@
 .beforeSelectingChatGif {
   font-family: 'PT Serif', serif;
 }
+
+.chatAreaBG {
+  background-image: url("https://w0.peakpx.com/wallpaper/508/606/HD-wallpaper-whatsapp-l-background-doodle-pattern-patterns.jpg");
+  opacity: 0.9;
+}
