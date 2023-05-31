@@ -1,0 +1,15 @@
+.chatAreaBG {
+    background-image: url("https://w0.peakpx.com/wallpaper/508/606/HD-wallpaper-whatsapp-l-background-doodle-pattern-patterns.jpg");
+    opacity: 0.9;
+}
+
+.beforeSelectingChatGif {
+    font-family: 'PT Serif', serif;
+}
+
+.chatMessagesDisplay {
+    display: flex;
+    flex-direction: column;
+    overflow-y: scroll;
+    scrollbar-width: 0;
+}

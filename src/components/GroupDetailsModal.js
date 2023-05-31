@@ -19,7 +19,8 @@ import {
 } from "@chakra-ui/react";
 import { ChatStates } from "../chatContext";
 import SelectedusersDisplay from "./SelectedusersDisplay";
-const GroupDetailsModal = ({ update, setUpdate }) => {
+
+const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
   const { isOpen, onOpen, onClose } = useDisclosure();
   const user = ChatStates().userDetails;
   const token = ChatStates().authToken;
@@ -30,6 +31,7 @@ const GroupDetailsModal = ({ update, setUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [renameLoading, setRenameLoading] = useState(false);
   let toast = useToast();
+
   const removeUser = async (userId) => {
     if (selectedChat.groupAdmin._id !== user._id && userId !== user._id) {
       return toast({
@@ -56,6 +58,7 @@ const GroupDetailsModal = ({ update, setUpdate }) => {
       let response = await res.json();
       userId === user._id ? setSelectedChat() : setSelectedChat(response);
       setUpdate(!update);
+      fetchAllMessages();
     } catch (error) {
       toast({
         title: "Error Occured!",
