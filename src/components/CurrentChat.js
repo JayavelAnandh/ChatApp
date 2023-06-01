@@ -28,6 +28,8 @@ const CurrentChat = ({ update, setUpdate }) => {
   const [loading, setLoading] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
+  const [typing, setTyping] = useState(false);
+  const [isTyping, setIsTyping] = useState(false);
   const toast = useToast();
 
   const fetchAllMessages = async () => {
@@ -62,8 +64,14 @@ const CurrentChat = ({ update, setUpdate }) => {
   useEffect(() => {
     socket = io(ENDPOINT);
     socket.emit("setup", user);
-    socket.on("connection", () => {
+    socket.on("connected", () => {
       setSocketConnected(true);
+    });
+    socket.on("typing", () => {
+      setIsTyping(true);
+    });
+    socket.on("stop typing", () => {
+      setIsTyping(false);
     });
   }, []);
 
@@ -84,8 +92,10 @@ const CurrentChat = ({ update, setUpdate }) => {
       }
     });
   });
+
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
+      socket.emit("stop typing", selectedChat._id);
       try {
         let res = await fetch("http://localhost:5000/message", {
           method: "POST",
@@ -114,8 +124,28 @@ const CurrentChat = ({ update, setUpdate }) => {
       }
     }
   };
+
   const typingHandler = (event) => {
     setNewMessage(event.target.value);
+
+    if (!socketConnected) return;
+
+    if (!typing) {
+      setTyping(true);
+      socket.emit("typing", selectedChat._id);
+    }
+
+    let lastTypingTime = new Date().getTime();
+    var timerLength = 3000;
+    setTimeout(() => {
+      var timeNow = new Date().getTime();
+      var timeDiference = timeNow - lastTypingTime;
+
+      if (timeDiference >= timerLength && typing) {
+        socket.emit("stop typing", selectedChat._id);
+        setTyping(false);
+      }
+    }, timerLength);
   };
   return (
     <>
@@ -177,12 +207,27 @@ const CurrentChat = ({ update, setUpdate }) => {
             ) : (
               <div className="chatMessagesDisplay">
                 <ScrollableChats messages={messages} />
+
                 <FormControl
                   onKeyDown={(event) => sendMessage(event)}
                   id="first-name"
                   isRequired
                   mt={3}
                 >
+                  {isTyping ? (
+                    <div>
+                      <iframe
+                        src="https://embed.lottiefiles.com/animation/12966"
+                        style={{
+                          height: "30px",
+                          marginLeft: "0px",
+                          width: "100px",
+                        }}
+                      ></iframe>
+                    </div>
+                  ) : (
+                    ""
+                  )}
                   <Input
                     variant="outline"
                     bg="gainsboro"
