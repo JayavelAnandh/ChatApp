@@ -15,6 +15,10 @@ import GroupDetailsModal from "./GroupDetailsModal";
 import ProfileView from "./ProfileView";
 import "./CurrentChat.css";
 import ScrollableChats from "./ScrollableChats";
+import { io } from "socket.io-client";
+
+const ENDPOINT = "http://localhost:5000";
+var socket, selectedChatCompare;
 
 const CurrentChat = ({ update, setUpdate }) => {
   const user = ChatStates().userDetails;
@@ -22,6 +26,7 @@ const CurrentChat = ({ update, setUpdate }) => {
   const { selectedChat, setSelectedChat, chats, setChats } = ChatStates();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [socketConnected, setSocketConnected] = useState(false);
   const [newMessage, setNewMessage] = useState("");
   const toast = useToast();
 
@@ -40,7 +45,7 @@ const CurrentChat = ({ update, setUpdate }) => {
       );
       let response = await res.json();
       setMessages(response);
-      console.log(messages);
+      socket.emit("join chat", selectedChat._id);
     } catch (error) {
       toast({
         title: "Error Occured!",
@@ -53,10 +58,32 @@ const CurrentChat = ({ update, setUpdate }) => {
     }
     setLoading(false);
   };
+
+  useEffect(() => {
+    socket = io(ENDPOINT);
+    socket.emit("setup", user);
+    socket.on("connection", () => {
+      setSocketConnected(true);
+    });
+  }, []);
+
   useEffect(() => {
     fetchAllMessages();
+    selectedChatCompare = selectedChat;
   }, [selectedChat]);
 
+  useEffect(() => {
+    socket.on("message received", (newMessageReceived) => {
+      if (
+        !selectedChatCompare ||
+        selectedChatCompare._id !== newMessageReceived.chat._id
+      ) {
+        //notify
+      } else {
+        setMessages([].concat(...messages, newMessageReceived));
+      }
+    });
+  });
   const sendMessage = async (event) => {
     if (event.key === "Enter" && newMessage) {
       try {
@@ -73,6 +100,7 @@ const CurrentChat = ({ update, setUpdate }) => {
         });
         setNewMessage("");
         let response = await res.json();
+        socket.emit("new message", response);
         setMessages([].concat(...messages, response));
       } catch (error) {
         toast({
@@ -136,7 +164,7 @@ const CurrentChat = ({ update, setUpdate }) => {
               backgroundColor: "gainsboro",
               padding: "8px",
               width: "100%",
-              height: "100%",
+              height: "90%",
               borderRadius: "15px",
               msOverflowY: "hidden",
             }}
@@ -149,30 +177,30 @@ const CurrentChat = ({ update, setUpdate }) => {
             ) : (
               <div className="chatMessagesDisplay">
                 <ScrollableChats messages={messages} />
-              </div>
-            )}
-            <FormControl
-              onKeyDown={(event) => sendMessage(event)}
-              id="first-name"
-              isRequired
-              mt={3}
-            >
-              <Input
-                variant="outline"
-                bg="gainsboro"
-                placeholder="Enter a message.."
-                value={newMessage}
-                onChange={(event) => typingHandler(event)}
-                focusBorderColor="green.600"
-                borderWidth="1.5px"
-                width="100%"
-              />
+                <FormControl
+                  onKeyDown={(event) => sendMessage(event)}
+                  id="first-name"
+                  isRequired
+                  mt={3}
+                >
+                  <Input
+                    variant="outline"
+                    bg="gainsboro"
+                    placeholder="Enter a message.."
+                    value={newMessage}
+                    onChange={(event) => typingHandler(event)}
+                    focusBorderColor="green.600"
+                    borderWidth="1.5px"
+                    width="100%"
+                  />
 
-              {/* <i
+                  {/* <i
                 className="fa-brands fa-telegram fa-2xl"
                 style={{ marginLeft: "1%" }}
               ></i> */}
-            </FormControl>
+                </FormControl>
+              </div>
+            )}
           </Box>
         </>
       ) : (
