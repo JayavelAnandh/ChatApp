@@ -12,3 +12,28 @@
     padding: "5px 10px 5px 10px";
     border-width: 5px;
 }
+
+.notificationIcon {
+    position: relative;
+}
+
+.notificationIcon .icon {
+    width: 40px;
+    height: 40px;
+}
+
+.notificationShower {
+    height: 20px;
+    width: 20px;
+    background-color: red;
+    display: inline-block;
+    position: absolute;
+    right: 0;
+    top: 0;
+    border-radius: 50%;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-weight: 600;
+}

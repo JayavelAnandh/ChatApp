@@ -147,8 +147,9 @@ const Sidebar = () => {
         </Text>
         <div>
           <Menu>
-            <MenuButton>
-              <ChatIcon m={1} fontSize="2xl" />
+            <MenuButton className="notificationIcon">
+              <ChatIcon m={1} fontSize="2xl" className="icon" />
+              <div className="notificationShower">{notification.length}</div>
             </MenuButton>
             <MenuList pl={2}>
               {!notification.length && "No New Notifications!"}
