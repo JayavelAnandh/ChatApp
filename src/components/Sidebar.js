@@ -142,7 +142,7 @@ const Sidebar = () => {
           </Button>
         </Tooltip>
 
-        <Text fontSize="2xl" fontFamily="Work sans" paddingTop="1%">
+        <Text fontSize="3xl" fontFamily="Work sans" paddingTop="1%">
           VOLUBLE
         </Text>
         <div>
