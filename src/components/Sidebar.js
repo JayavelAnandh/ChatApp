@@ -20,8 +20,7 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
-import { Effect } from "react-notification-badge";
-import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
+
 import { useNavigate } from "react-router-dom";
 import { ChatStates } from "../chatContext";
 import { getSender2 } from "./commonFunctions";
@@ -150,10 +149,6 @@ const Sidebar = () => {
         <div>
           <Menu>
             <MenuButton>
-              <NotificationBadge
-                count={notification.length}
-                effect={Effect.SCALE}
-              />
               <ChatIcon m={1} fontSize="2xl" />
             </MenuButton>
             <MenuList pl={2}>
