@@ -69,7 +69,7 @@ const Sidebar = () => {
       setLoading(true);
 
       let res = await fetch(
-        `https://voluble.vercel.app/user/all?search=${search}`,
+        `https://voluble.onrender.com/user/all?search=${search}`,
         {
           method: "GET",
           headers: {
@@ -97,7 +97,7 @@ const Sidebar = () => {
   const accessChat = async (userId) => {
     try {
       setLoadingChat(true);
-      let data = await fetch(`https://voluble.vercel.app/chat/`, {
+      let data = await fetch(`https://voluble.onrender.com/chat/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

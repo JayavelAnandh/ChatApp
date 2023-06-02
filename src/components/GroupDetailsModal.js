@@ -44,7 +44,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     }
     try {
       setLoading(true);
-      let res = await fetch("https://voluble.vercel.app/chat/removeMember", {
+      let res = await fetch("https://voluble.onrender.com/chat/removeMember", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -96,7 +96,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     }
     try {
       setLoading(true);
-      let res = await fetch("https://voluble.vercel.app/chat/addMember", {
+      let res = await fetch("https://voluble.onrender.com/chat/addMember", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -127,7 +127,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     if (!groupChatName) return;
     try {
       setRenameLoading(true);
-      let res = await fetch("https://voluble.vercel.app/chat/renameGroup", {
+      let res = await fetch("https://voluble.onrender.com/chat/renameGroup", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -173,7 +173,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
       setLoading(true);
 
       let res = await fetch(
-        `https://voluble.vercel.app/user/all?search=${search}`,
+        `https://voluble.onrender.com/user/all?search=${search}`,
         {
           method: "GET",
           headers: {

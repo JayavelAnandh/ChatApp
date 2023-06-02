@@ -39,7 +39,7 @@ const GroupChatModal = ({ children }) => {
       setLoading(true);
 
       let res = await fetch(
-        `https://voluble.vercel.app/user/all?search=${search}`,
+        `https://voluble.onrender.com/user/all?search=${search}`,
         {
           method: "GET",
           headers: {
@@ -86,7 +86,7 @@ const GroupChatModal = ({ children }) => {
       //       usersIdArray,
       //     })
       //   );
-      let res = await fetch("https://voluble.vercel.app/chat/newGroup", {
+      let res = await fetch("https://voluble.onrender.com/chat/newGroup", {
         method: "POST",
         body: JSON.stringify({
           name: groupChatName,
