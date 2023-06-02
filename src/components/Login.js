@@ -13,7 +13,7 @@ const Login = () => {
   const handleSubmit = async () => {
     setBtnLoading(true);
     try {
-      let res = await fetch("http://localhost:5000/user/login", {
+      let res = await fetch("https://voluble.vercel.app/user/login", {
         method: "POST",
         headers: {
           "content-type": "application/json",

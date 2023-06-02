@@ -18,7 +18,7 @@ const SignUp = () => {
     setBtnLoading(true);
     if (password == confirmPassword) {
       try {
-        let res = await fetch("http://localhost:5000/user/signup", {
+        let res = await fetch("https://voluble.vercel.app/user/signup", {
           method: "POST",
           headers: {
             "content-type": "application/json",

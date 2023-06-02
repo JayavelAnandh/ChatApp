@@ -44,7 +44,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     }
     try {
       setLoading(true);
-      let res = await fetch("http://localhost:5000/chat/removeMember", {
+      let res = await fetch("https://voluble.vercel.app/chat/removeMember", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -72,7 +72,6 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     setLoading(false);
   };
 
-  //http://localhost:5000/chat/addMember
   const AddUser = async (userId) => {
     if (selectedChat.users.find((u) => u._id === userId)) {
       toast({
@@ -97,7 +96,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     }
     try {
       setLoading(true);
-      let res = await fetch("http://localhost:5000/chat/addMember", {
+      let res = await fetch("https://voluble.vercel.app/chat/addMember", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -128,7 +127,7 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
     if (!groupChatName) return;
     try {
       setRenameLoading(true);
-      let res = await fetch("http://localhost:5000/chat/renameGroup", {
+      let res = await fetch("https://voluble.vercel.app/chat/renameGroup", {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -173,12 +172,15 @@ const GroupDetailsModal = ({ update, setUpdate, fetchAllMessages }) => {
 
       setLoading(true);
 
-      let res = await fetch(`http://localhost:5000/user/all?search=${search}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      let res = await fetch(
+        `https://voluble.vercel.app/user/all?search=${search}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let response = await res.json();
 
       setSearchResult(response);

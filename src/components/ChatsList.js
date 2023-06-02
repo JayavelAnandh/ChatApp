@@ -25,7 +25,7 @@ const MyChats = ({ update }) => {
       //const { data } = await axios.get("/api/chat", config);
       //setChats(data);
 
-      let res = await fetch("http://localhost:5000/chat/", {
+      let res = await fetch("https://voluble.vercel.app/chat/", {
         method: "GET",
         headers: {
           Authorization: `Bearer ${token}`,

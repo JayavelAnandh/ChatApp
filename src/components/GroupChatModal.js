@@ -38,12 +38,15 @@ const GroupChatModal = ({ children }) => {
     try {
       setLoading(true);
 
-      let res = await fetch(`http://localhost:5000/user/all?search=${search}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      let res = await fetch(
+        `https://voluble.vercel.app/user/all?search=${search}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let response = await res.json();
       console.log(response);
       setSearchResult(response);
@@ -83,7 +86,7 @@ const GroupChatModal = ({ children }) => {
       //       usersIdArray,
       //     })
       //   );
-      let res = await fetch("http://localhost:5000/chat/newGroup", {
+      let res = await fetch("https://voluble.vercel.app/chat/newGroup", {
         method: "POST",
         body: JSON.stringify({
           name: groupChatName,

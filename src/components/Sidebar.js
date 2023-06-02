@@ -69,12 +69,15 @@ const Sidebar = () => {
 
       setLoading(true);
 
-      let res = await fetch(`http://localhost:5000/user/all?search=${search}`, {
-        method: "GET",
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
-      });
+      let res = await fetch(
+        `https://voluble.vercel.app/user/all?search=${search}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
       let response = await res.json();
 
       setSearchResult(response);
@@ -95,7 +98,7 @@ const Sidebar = () => {
   const accessChat = async (userId) => {
     try {
       setLoadingChat(true);
-      let data = await fetch(`http://localhost:5000/chat/`, {
+      let data = await fetch(`https://voluble.vercel.app/chat/`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

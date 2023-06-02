@@ -17,7 +17,7 @@ import "./CurrentChat.css";
 import ScrollableChats from "./ScrollableChats";
 import { io } from "socket.io-client";
 
-const ENDPOINT = "http://localhost:5000";
+const ENDPOINT = "https://voluble.vercel.app/";
 var socket, selectedChatCompare;
 
 const CurrentChat = ({ update, setUpdate }) => {
@@ -38,7 +38,7 @@ const CurrentChat = ({ update, setUpdate }) => {
     setLoading(true);
     try {
       let res = await fetch(
-        `http://localhost:5000/message/${selectedChat._id}`,
+        `https://voluble.vercel.app/message/${selectedChat._id}`,
         {
           method: "GET",
           headers: {
@@ -101,7 +101,7 @@ const CurrentChat = ({ update, setUpdate }) => {
     if (event.key === "Enter" && newMessage) {
       socket.emit("stop typing", selectedChat._id);
       try {
-        let res = await fetch("http://localhost:5000/message", {
+        let res = await fetch("https://voluble.vercel.app/message", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
