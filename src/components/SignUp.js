@@ -58,7 +58,6 @@ const SignUp = () => {
           position: "bottom",
         });
       } catch (error) {
-        console.log(error);
         setBtnLoading(false);
         toast({
           title: error,
@@ -92,7 +91,7 @@ const SignUp = () => {
         position: "bottom",
       });
     }
-    console.log(img);
+
     if (img.type == "image/jpeg" || img.type == "image/png") {
       let data = new FormData();
       data.append("file", img);
@@ -109,11 +108,9 @@ const SignUp = () => {
         .then((res) => res.json())
         .then((response) => {
           setPic(response.url.toString());
-          console.log(response.url.toString());
           setBtnLoading(false);
         })
         .catch((err) => {
-          console.log(err);
           setBtnLoading(false);
         });
     } else {

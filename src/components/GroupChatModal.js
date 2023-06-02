@@ -48,7 +48,7 @@ const GroupChatModal = ({ children }) => {
         }
       );
       let response = await res.json();
-      console.log(response);
+
       setSearchResult(response);
       setLoading(false);
     } catch (error) {
@@ -80,12 +80,7 @@ const GroupChatModal = ({ children }) => {
           return u._id;
         })
       );
-      //   console.log(
-      //     JSON.stringify({
-      //       groupChatName,
-      //       usersIdArray,
-      //     })
-      //   );
+
       let res = await fetch("https://voluble.onrender.com/chat/newGroup", {
         method: "POST",
         body: JSON.stringify({
@@ -121,7 +116,6 @@ const GroupChatModal = ({ children }) => {
   const handleGroup = (user) => {
     if (!selectedUsers.includes(user)) {
       setSelectedUsers([].concat(...selectedUsers, user));
-      console.log(selectedUsers);
     } else {
       return toast({
         title: "Error Occured!",

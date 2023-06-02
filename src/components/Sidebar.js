@@ -108,7 +108,6 @@ const Sidebar = () => {
         }),
       });
       let response = await data.json();
-      console.log(response);
       if (!chats.find((c) => c._id === response._id)) {
         setChats([data, ...chats]);
       }

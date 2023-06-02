@@ -51,7 +51,6 @@ const Login = () => {
         position: "bottom",
       });
     } catch (error) {
-      console.log(error);
       setBtnLoading(false);
       toast({
         title: error,

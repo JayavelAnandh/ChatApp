@@ -80,7 +80,6 @@ const CurrentChat = ({ update, setUpdate }) => {
     fetchAllMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-  console.log(notification);
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
       if (

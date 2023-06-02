@@ -20,11 +20,7 @@ const MyChats = ({ update }) => {
   const toast = useToast();
   const token = localStorage.getItem("x-auth-token");
   const fetchChats = async () => {
-    // console.log(user._id);
     try {
-      //const { data } = await axios.get("/api/chat", config);
-      //setChats(data);
-
       let res = await fetch("https://voluble.onrender.com/chat/", {
         method: "GET",
         headers: {
