@@ -20,8 +20,11 @@ import {
   useToast,
 } from "@chakra-ui/react";
 import React, { useState } from "react";
+import { Effect } from "react-notification-badge";
+import NotificationBadge from "react-notification-badge/lib/components/NotificationBadge";
 import { useNavigate } from "react-router-dom";
 import { ChatStates } from "../chatContext";
+import { getSender2 } from "./commonFunctions";
 import ProfileView from "./ProfileView";
 import "./sidebar.css";
 const Sidebar = () => {
@@ -35,7 +38,14 @@ const Sidebar = () => {
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   let user = ChatStates().userDetails;
-  let { chats, setChats, selectedChat, setSelectedChat } = ChatStates();
+  let {
+    chats,
+    setChats,
+    selectedChat,
+    setSelectedChat,
+    notification,
+    setNotification,
+  } = ChatStates();
 
   const logOutMethod = () => {
     localStorage.removeItem("user-details");
@@ -134,35 +144,64 @@ const Sidebar = () => {
         <Text fontSize="2xl" fontFamily="Work sans" paddingTop="1%">
           VOLUBLE
         </Text>
-
-        <Menu>
-          <MenuButton>
-            <ChatIcon />
-          </MenuButton>
-        </Menu>
-        <Menu>
-          <MenuButton type="button" as={Button} rightIcon={<ChevronDownIcon />}>
-            <Avatar
-              size="sm"
-              cursor="pointer"
-              name={user.name}
-              src={user.pic}
-            />
-          </MenuButton>
-          <MenuList>
-            <ProfileView user={user}>
-              <MenuItem>Profile</MenuItem>
-            </ProfileView>
-            <hr />
-            <MenuItem
-              onClick={() => {
-                logOutMethod();
-              }}
+        <div>
+          <Menu>
+            <MenuButton>
+              <NotificationBadge
+                count={notification.length}
+                effect={Effect.SCALE}
+              />
+              <ChatIcon m={1} fontSize="2xl" />
+            </MenuButton>
+            <MenuList pl={2}>
+              {!notification.length && "No New Notifications!"}
+              {notification.map((notify, idx) => {
+                return (
+                  <MenuItem
+                    key={idx}
+                    onClick={() => {
+                      setSelectedChat(notify.chat);
+                      setNotification(
+                        notification.filter((nots) => nots !== notify)
+                      );
+                    }}
+                  >
+                    {notify.chat.isGroupChat
+                      ? `Someone messaged in ${notify.chat.chatName}`
+                      : `${getSender2(user, notify.chat.users)} messaged you `}
+                  </MenuItem>
+                );
+              })}
+            </MenuList>
+          </Menu>
+          <Menu>
+            <MenuButton
+              type="button"
+              as={Button}
+              rightIcon={<ChevronDownIcon />}
             >
-              LogOut
-            </MenuItem>
-          </MenuList>
-        </Menu>
+              <Avatar
+                size="sm"
+                cursor="pointer"
+                name={user.name}
+                src={user.pic}
+              />
+            </MenuButton>
+            <MenuList>
+              <ProfileView user={user}>
+                <MenuItem>Profile</MenuItem>
+              </ProfileView>
+              <hr />
+              <MenuItem
+                onClick={() => {
+                  logOutMethod();
+                }}
+              >
+                LogOut
+              </MenuItem>
+            </MenuList>
+          </Menu>
+        </div>
       </Box>
       <Drawer placement="left" onClose={onClose} isOpen={isOpen} size="sm">
         <DrawerOverlay />

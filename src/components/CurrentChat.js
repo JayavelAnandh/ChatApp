@@ -23,7 +23,8 @@ var socket, selectedChatCompare;
 const CurrentChat = ({ update, setUpdate }) => {
   const user = ChatStates().userDetails;
   const token = ChatStates().authToken;
-  const { selectedChat, setSelectedChat, chats, setChats } = ChatStates();
+  const { selectedChat, setSelectedChat, notification, setNotification } =
+    ChatStates();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
   const [socketConnected, setSocketConnected] = useState(false);
@@ -79,14 +80,17 @@ const CurrentChat = ({ update, setUpdate }) => {
     fetchAllMessages();
     selectedChatCompare = selectedChat;
   }, [selectedChat]);
-
+  console.log(notification);
   useEffect(() => {
     socket.on("message received", (newMessageReceived) => {
       if (
         !selectedChatCompare ||
         selectedChatCompare._id !== newMessageReceived.chat._id
       ) {
-        //notify
+        if (!notification.includes(newMessageReceived)) {
+          setNotification([].concat(newMessageReceived, ...notification));
+          setUpdate(!update);
+        }
       } else {
         setMessages([].concat(...messages, newMessageReceived));
       }
